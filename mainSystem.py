@@ -28,8 +28,8 @@ def main():
                 delete()
             elif choice == 4:
                 modify()
-            # elif choice == 5:
-
+            elif choice == 5:
+                sort()
             elif choice == 6:
                 total()
             elif choice == 7:
@@ -253,6 +253,44 @@ def modify():
             modify()
     pass
 
+# 按照某成绩排序信息
+def sort():
+    show()
+    if os.path.exists(filename):
+        with open(filename,'r',encoding='UTF-8') as r_file:
+            student_list = r_file.readlines()
+            student_sort = []
+            # 数据类型转换
+            for item in student_list:
+                student_info = dict(eval(item))
+                student_sort.append(student_info)
+    else:
+        return
+    asc_or_desc = input("请选择(0.升序 1.降序)")
+    if asc_or_desc == '0':
+        asc_or_desc_bool = False
+    elif asc_or_desc == '1':
+        asc_or_desc_bool = True
+    else:
+        print('您输入有误，请重新输入')
+        sort()
+
+    choice = input('请选择排序的内容(1.按英语成绩排序 2.按python成绩排序 3.按照C语言成绩排序 0.按照总成绩排序)')
+    if choice == '1':
+        # list.sort(key = None,reverse = False)
+        # key   -----接受的参数，类型为函数形式
+        # reverse 排序规则 reverse = True 降序 reverse = False
+        student_sort.sort(key=lambda s: int(s['English']),reverse=asc_or_desc_bool)
+    elif choice == '2':
+        student_sort.sort(key=lambda s: int(s['Python']), reverse=asc_or_desc_bool)
+    elif choice == '3':
+        student_sort.sort(key=lambda s: int(s['C语言']), reverse=asc_or_desc_bool)
+    elif choice == '0':
+        student_sort.sort(key=lambda s: int(s['English']) + int(s['Python']) + int(s['C语言']), reverse=asc_or_desc_bool)
+    else:
+        print('您输入的有误，请重新输入')
+        sort()
+    show_student(student_sort)
 
 # 统计学生总人数
 def total():
