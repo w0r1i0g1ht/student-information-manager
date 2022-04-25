@@ -185,7 +185,7 @@ def delete():
                         info = dict(eval(item))
                         # 查询出来的值，不等于给定删除的值，则进行覆盖写
                         if info['id'] != student_id:
-                            w_file.write(str(info))
+                            w_file.write(str(info) + '\n')
                         else:
                             flag = True
                     if flag:
